@@ -23,7 +23,7 @@ jobs:
         run: |
           ls -al 
           zip -r wordpress.zip ./wordpress
-          aws s3 cp wordpress.zip $BUCKET_URL --dry-run
+          aws s3 cp wordpress.zip $BUCKET_URL --dryrun
 
   terraform:
     name: terraform plan
