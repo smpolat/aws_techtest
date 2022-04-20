@@ -22,7 +22,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
   max_size = 5
   # load_balancers       = ["${aws_elb.elb.name}"]
   health_check_type = "ELB"
-  target_group_arns = aws_lb_target_group.target.arn
+  target_group_arns = [aws_lb_target_group.target.arn]
 }
 
 data "template_file" "user_data" {
