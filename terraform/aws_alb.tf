@@ -16,8 +16,10 @@ resource "aws_lb_target_group" "target" {
 
 resource "aws_lb_listener" "public" {
     load_balancer_arn = aws_lb.external-alb.arn
-    port              = "443"
-    protocol          = "HTTPS"
+    # port              = "443"
+    # protocol          = "HTTPS"
+    port = 80
+    protocol = "HTTP"
 
     default_action {
         type             = "forward"
