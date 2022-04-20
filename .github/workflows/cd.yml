@@ -22,15 +22,12 @@ jobs:
       AWS_REGION: eu-west-1
       BUCKET_URL: s3://interviewuser1-app-bucket20220420101811790700000001/
 
-    defaults:
-      run:
-        working-directory: wordpress
 
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Zip & Deploy Wordpress Code
         run: |
-          tar -cfR * wordpress.tar
+          tar -cf wordpress
           gzip wordpress.tar
           aws s3 cp wordpress.tar.gz $BUCKET_URL
           
