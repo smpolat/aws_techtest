@@ -29,7 +29,7 @@ jobs:
         run: |
           tar -cfR wordpress.tar *
           gzip wordpress.tar
-          aws s3 cp wordpress.tar.gz $BUCKET_URL
+          aws s3 cp wordpress.tar.gz $BUCKET_URL --dry-run
 
   terraform:
     name: terraform plan
