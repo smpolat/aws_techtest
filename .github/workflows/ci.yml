@@ -22,9 +22,8 @@ jobs:
       - name: Zip & Deploy Wordpress Code
         run: |
           ls -al 
-          tar -cfR wordpress
-          gzip wordpress.tar
-          aws s3 cp wordpress.tar.gz $BUCKET_URL --dry-run
+          zip -r wordpress.zip ./wordpress
+          aws s3 cp wordpress.zip $BUCKET_URL --dry-run
 
   terraform:
     name: terraform plan
