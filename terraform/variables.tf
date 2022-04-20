@@ -27,7 +27,6 @@ variable "priSubnet4_cidr" {
   default = "10.0.6.0/24"
 }
 
-variable "db_host" {}
 variable "db_name" {}
 variable "db_user" {}
 variable "db_pass" {}
