@@ -8,7 +8,7 @@ yum install -y amazon-linux-extras
 amazon-linux-extras enable php7.4
 yum clean metadata
 yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
-wget  https://${bucket_url}/wordpress.tar.gz
-tar –xvzf wordpress.tar.gz –C /var/www/html/
+aws s3 cp ${ bucket_url }/wordpress.zip .
+unzip wordpress.zip –d /var/www/html/
 
 # Configure wordpress

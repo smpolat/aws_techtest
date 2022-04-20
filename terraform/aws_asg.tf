@@ -27,8 +27,8 @@ resource "aws_autoscaling_group" "autoscaling_group" {
 data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.tpl")
   vars = {
-    bucket_url       = var.bucket_url
-    db_host          = var.db_host
+    bucket_url       = "s3://${aws_s3_bucket.wordpress.id}"
+    db_host          = aws_db_instance.db.address
     db_name          = var.db_name
     db_user          = var.db_user
     db_pass          = var.db_pass

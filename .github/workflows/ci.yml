@@ -6,8 +6,6 @@ on:
       - "wordpress/**"
       - ".github/workflows/ci.yml"
 
-concurrency: ci-${{ github.ref }}
-
 jobs:
   wordpress:
     name: wordpress
@@ -19,17 +17,13 @@ jobs:
       AWS_REGION: eu-west-1
       BUCKET_URL: s3://interviewuser1-app-bucket20220420101811790700000001/
 
-    defaults:
-      run:
-        working-directory: wordpress
-
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Zip & Deploy Wordpress Code
         run: |
-          tar -cfR wordpress.tar *
-          gzip wordpress.tar
-          aws s3 cp wordpress.tar.gz $BUCKET_URL --dry-run
+          ls -al 
+          zip -r wordpress.zip ./wordpress
+          aws s3 cp wordpress.zip $BUCKET_URL --dryrun
 
   terraform:
     name: terraform plan
@@ -39,6 +33,17 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
       AWS_REGION: eu-west-1
+      TF_VAR_db_name: ${{ secrets.DB_NAME }}
+      TF_VAR_db_user: ${{ secrets.DB_USER }}
+      TF_VAR_db_pass: ${{ secrets.DB_PASS }}
+      TF_VAR_auth_key: ${{ secrets.AUTH_KEY }}
+      TF_VAR_secure_auth_key: ${{ secrets.SECURE_AUTH_KEY }}
+      TF_VAR_logged_in_key: ${{ secrets.LOGGED_IN_KEY }}
+      TF_VAR_nonce_key: ${{ secrets.NONCE_KEY }}
+      TF_VAR_auth_salt: ${{ secrets.AUTH_SALT }}
+      TF_VAR_secure_auth_salt: ${{ secrets.SECURE_AUTH_SALT }}
+      TF_VAR_logged_in_salt: ${{ secrets.LOGGED_IN_SALT }}
+      TF_VAR_nonce_salt: ${{ secrets.NONCE_SALT }}
 
     defaults:
       run:
@@ -53,7 +58,7 @@ jobs:
         continue-on-error: true
       - name: terraform init
         id: init
-        run: terraform init
+        run: terraform init -lock=false
       - name: terraform plan
         id: plan
-        run: terraform plan
+        run: terraform plan -lock=false
