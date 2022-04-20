@@ -6,8 +6,6 @@ on:
       - "wordpress/**"
       - ".github/workflows/ci.yml"
 
-concurrency: ci-${{ github.ref }}
-
 jobs:
   wordpress:
     name: wordpress
@@ -61,7 +59,7 @@ jobs:
         continue-on-error: true
       - name: terraform init
         id: init
-        run: terraform init
+        run: terraform init -lock=false
       - name: terraform plan
         id: plan
-        run: terraform plan
+        run: terraform plan -lock=false
