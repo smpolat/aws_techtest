@@ -1,0 +1,44 @@
+name: CD
+on:
+  push:
+    paths:
+      - "terraform/**.tf"
+      - "wordpress/**"
+      - ".github/workflows/ci.yml"
+    branches:
+      - "master"
+
+
+concurrency: cd-${{ github.ref }}
+
+jobs:
+  terraform:
+    name: terraform apply
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+      AWS_REGION: eu-west-1
+
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: hashicorp/setup-terraform@v1
+      - name: format check
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+      - name: terraform init
+        id: init
+        run: terraform init
+      - name: terraform plan
+        id: plan
+        run: terraform plan -out=plan.out
+      - name: terraform apply
+        id: apply
+        run: terraform apply -auto-approve plan.out
+        
