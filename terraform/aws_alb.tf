@@ -1,6 +1,6 @@
 # # Creating External LoadBalancer
 resource "aws_lb" "external-alb" {
-    name               = "External LB"
+    name               = "external"
     internal           = false
     load_balancer_type = "application"
     security_groups    = [aws_security_group.appSg.id]
@@ -8,7 +8,7 @@ resource "aws_lb" "external-alb" {
 }
 
 resource "aws_lb_target_group" "target" {
-    name     = "ALB TG"
+    name     = target"
     port     = 80
     protocol = "HTTP"
     vpc_id   = aws_vpc.interview_vpc.id
