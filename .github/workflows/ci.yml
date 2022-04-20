@@ -39,6 +39,17 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
       AWS_REGION: eu-west-1
+      TF_VAR_db_name: ${{ secrets.DB_NAME }}
+      TF_VAR_db_user: ${{ secrets.DB_USER }}
+      TF_VAR_db_pass: ${{ secrets.DB_PASS }}
+      TF_VAR_auth_key: ${{ secrets.AUTH_KEY }}
+      TF_VAR_secure_auth_key: ${{ secrets.SECURE_AUTH_KEY }}
+      TF_VAR_logged_in_key: ${{ secrets.LOGGED_IN_KEY }}
+      TF_VAR_nonce_key: ${{ secrets.NONCE_KEY }}
+      TF_VAR_auth_salt: ${{ secrets.AUTH_SALT }}
+      TF_VAR_secure_auth_salt: ${{ secrets.SECURE_AUTH_SALT }}
+      TF_VAR_logged_in_salt: ${{ secrets.LOGGED_IN_SALT }}
+      TF_VAR_nonce_salt: ${{ secrets.NONCE_SALT }}
 
     defaults:
       run:
